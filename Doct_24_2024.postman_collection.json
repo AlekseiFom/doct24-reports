@@ -1,0 +1,941 @@
+{
+  "info": {
+    "_postman_id": "f468ad0f-7375-41d1-9b73-f7b6878513a6",
+    "name": "Doct_24_2024",
+    "description": "# 🚀 Get started here\n\nThis template guides you through CRUD operations (GET, POST, PUT, DELETE), variables, and tests.\n\n## 🔖 **How to use this template**\n\n#### **Step 1: Send requests**\n\nRESTful APIs allow you to perform CRUD operations using the POST, GET, PUT, and DELETE HTTP methods.\n\nThis collection contains each of these [request](https://learning.postman.com/docs/sending-requests/requests/) types. Open each request and click \"Send\" to see what happens.\n\n#### **Step 2: View responses**\n\nObserve the response tab for status code (200 OK), response time, and size.\n\n#### **Step 3: Send new Body data**\n\nUpdate or add new data in \"Body\" in the POST request. Typically, Body data is also used in PUT request.\n\n```\n{\n    \"name\": \"Add your name in the body\"\n}\n\n ```\n\n#### **Step 4: Update the variable**\n\nVariables enable you to store and reuse values in Postman. We have created a [variable](https://learning.postman.com/docs/sending-requests/variables/) called `base_url` with the sample request [https://postman-api-learner.glitch.me](https://postman-api-learner.glitch.me). Replace it with your API endpoint to customize this collection.\n\n#### **Step 5: Add tests in the \"Scripts\" tab**\n\nAdding tests to your requests can help you confirm that your API is working as expected. You can write test scripts in JavaScript and view the output in the \"Test Results\" tab.\n\n<img src=\"https://content.pstmn.io/fa30ea0a-373d-4545-a668-e7b283cca343/aW1hZ2UucG5n\" alt=\"\" height=\"1530\" width=\"2162\">\n\n## 💪 Pro tips\n\n- Use folders to group related requests and organize the collection.\n    \n- Add more [scripts](https://learning.postman.com/docs/writing-scripts/intro-to-scripts/) to verify if the API works as expected and execute workflows.\n    \n\n## 💡Related templates\n\n[API testing basics](https://go.postman.co/redirect/workspace?type=personal&collectionTemplateId=e9a37a28-055b-49cd-8c7e-97494a21eb54&sourceTemplateId=ddb19591-3097-41cf-82af-c84273e56719)  \n[API documentation](https://go.postman.co/redirect/workspace?type=personal&collectionTemplateId=e9c28f47-1253-44af-a2f3-20dce4da1f18&sourceTemplateId=ddb19591-3097-41cf-82af-c84273e56719)  \n[Authorization methods](https://go.postman.co/redirect/workspace?type=personal&collectionTemplateId=31a9a6ed-4cdf-4ced-984c-d12c9aec1c27&sourceTemplateId=ddb19591-3097-41cf-82af-c84273e56719)",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "46817265",
+    "_collection_link": "https://go.postman.co/collection/46817265-f468ad0f-7375-41d1-9b73-f7b6878513a6?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Авторизация",
+      "item": [
+        {
+          "name": "Получение свежего токена",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "   pm.response.to.have.status(200);\r",
+                  "if (pm.response.code === 200) {\r",
+                  "        \r",
+                  "    const jsonData = pm.response.json();\r",
+                  "\r",
+                  "        if (jsonData.access) {\r",
+                  "        pm.collectionVariables.set(\"access\", jsonData.access);\r",
+                  "        console.log(\"✅ Access токен сохранен\");\r",
+                  "    }\r",
+                  "\r",
+                  "    \r",
+                  "    if (jsonData.refresh) {\r",
+                  "        pm.collectionVariables.set(\"refresh\", jsonData.refresh);\r",
+                  "        console.log(\"✅ Refresh токен сохранен\");\r",
+                  "    }\r",
+                  "    pm.test(\"Status code is 200\", function () {\r",
+                  "     \r",
+                  "    });\r",
+                  "    \r",
+                  "} else {\r",
+                  "    console.log(\"❌ Ошибка при получении токенов: \" + pm.response.status);\r",
+                  "}\r",
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "accept",
+                "value": "*/*"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-CSRFTOKEN",
+                "value": "sVpOhd1g4yJlshkZevFCMnR4GbDJqR4l9aOouNjnNuLjKwF3mamo7aA5Rswti6kg"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"f@uk59.ru\",\n  \"password\": \"1234test\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/auth/jwt/create/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "auth",
+                "jwt",
+                "create",
+                ""
+              ]
+            },
+            "description": "Generated from cURL: curl -X 'POST'  \n'[https://api.test.telemed.doct24.com/api/users/create/'](https://api.test.telemed.doct24.com/api/users/create/')  \n\\-H 'accept: _/_'  \n\\-H 'Content-Type: application/json'  \n\\-H 'X-CSRFTOKEN: sVpOhd1g4yJlshkZevFCMnR4GbDJqR4l9aOouNjnNuLjKwF3mamo7aA5Rswti6kg'  \n\\-d '{  \n\"username\": \"Алёша\",  \n\"email\": \"[f@uk59.ru](https://mailto:f@uk59.ru)\",  \n\"role\": \"patient\",  \n\"password\": \"string\"  \n}'"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "положительные тесты",
+      "item": [
+        {
+          "name": "список докторов",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "data = pm.response.json(); \r",
+                  "\r",
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "\r",
+                  "// Убрали const перед остальными переменными для надежности\r",
+                  "firstDoctor = data.results[0];\r",
+                  "firstEducation = firstDoctor.education[0];\r",
+                  "firstSkill = firstDoctor.skills_improvement[0];\r",
+                  "firstSpec = firstDoctor.specialization[0];\r",
+                  "\r",
+                  "pm.collectionVariables.set(\"doctor_id\", firstDoctor.id);\r",
+                  "// ... остальной код без изменений\r",
+                  "\r",
+                  "pm.collectionVariables.set(\"education_id\", firstEducation.id);\r",
+                  "pm.collectionVariables.set(\"education_institution\", firstEducation.institution.name);\r",
+                  "pm.collectionVariables.set(\"education_specialty\", firstEducation.specialty.name);\r",
+                  "\r",
+                  "pm.collectionVariables.set(\"skills_improvement_id\", firstSkill.id);\r",
+                  "pm.collectionVariables.set(\"skills_improvement_org\", firstSkill.organization.name);\r",
+                  "pm.collectionVariables.set(\"skills_improvement_program\", firstSkill.program.name);\r",
+                  "\r",
+                  "// ID и имя специальности врача\r",
+                  "pm.collectionVariables.set(\"doctor_specialization_id\", firstSpec.id);\r",
+                  "pm.collectionVariables.set(\"doctor_specialization_name\", firstSpec.name);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            },
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/doctors/?available=no",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "doctors",
+                ""
+              ],
+              "query": [
+                {
+                  "key": "available",
+                  "value": "no"
+                }
+              ]
+            },
+            "description": "Generated from cURL: curl -X 'GET' \\\r\n  'https://api.test.telemed.doct24.com/api/doctors/?available=no' \\\r\n  -H 'accept: application/json'"
+          },
+          "response": []
+        },
+        {
+          "name": "Образование доктора",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const edu = pm.response.json();\r",
+                  "\r",
+                  "pm.test(\"Статус 200\", () => {\r",
+                  "  pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"ВУЗ совпадает со списком докторов\", () => {\r",
+                  "  pm.expect(edu.institution.name)\r",
+                  "    .to.eql(pm.collectionVariables.get(\"education_institution\"));\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Специальность совпадает со списком докторов\", () => {\r",
+                  "  pm.expect(edu.specialty.name)\r",
+                  "    .to.eql(pm.collectionVariables.get(\"education_specialty\"));\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{access}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/doctor_education/{{education_id}}/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "doctor_education",
+                "{{education_id}}",
+                ""
+              ]
+            },
+            "description": "Generated from cURL: curl -X 'GET' \\\r\n  'https://api.test.telemed.doct24.com/api/doctor_education/24/' \\\r\n  -H 'accept: application/json'"
+          },
+          "response": []
+        },
+        {
+          "name": "информация о повышении квалификации доктора",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "https://api.test.telemed.doct24.com/api/doctor_skills_improvement/5555/",
+              "protocol": "https",
+              "host": [
+                "api",
+                "test",
+                "telemed",
+                "doct24",
+                "com"
+              ],
+              "path": [
+                "api",
+                "doctor_skills_improvement",
+                "5555",
+                ""
+              ]
+            },
+            "description": "Generated from cURL: curl -X 'GET' \\\r\n  'https://api.test.telemed.doct24.com/api/doctor_skills_improvement/5555/' \\\r\n  -H 'accept: application/json'"
+          },
+          "response": []
+        },
+        {
+          "name": "Информация о  доктор-специалиизации",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const spec = pm.response.json();\r",
+                  "\r",
+                  "pm.test(\"Статус 200\", () => {\r",
+                  "  pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Название специальности совпадает со списком докторов\", () => {\r",
+                  "  pm.expect(spec.name)\r",
+                  "    .to.eql(pm.collectionVariables.get(\"doctor_specialization_name\"));\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{access}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/doctor_specialization/{{doctor_specialization_id}}/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "doctor_specialization",
+                "{{doctor_specialization_id}}",
+                ""
+              ]
+            },
+            "description": "Generated from cURL: curl -X 'GET' \\\r\n  'https://api.test.telemed.doct24.com/api/doctor_specialization/221/' \\\r\n  -H 'accept: application/json'"
+          },
+          "response": []
+        },
+        {
+          "name": "Отзывы о консультациях доктора",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "https://api.test.telemed.doct24.com/api/doctors/<DOCTOR_ID>/feedbacks/?limit=20&offset=0",
+              "protocol": "https",
+              "host": [
+                "api",
+                "test",
+                "telemed",
+                "doct24",
+                "com"
+              ],
+              "path": [
+                "api",
+                "doctors",
+                "<DOCTOR_ID>",
+                "feedbacks",
+                ""
+              ],
+              "query": [
+                {
+                  "key": "limit",
+                  "value": "20"
+                },
+                {
+                  "key": "offset",
+                  "value": "0"
+                }
+              ]
+            },
+            "description": "Generated from cURL: curl -X 'GET' \\\r\n  'https://api.test.telemed.doct24.com/api/doctors/<DOCTOR_ID>/feedbacks/?limit=20&offset=0' \\\r\n  -H 'accept: application/json'"
+          },
+          "response": []
+        },
+        {
+          "name": "Отзыв о сервисе",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Статус 201\", function () {\r",
+                  "    pm.response.to.have.status(201);\r",
+                  "});\r",
+                  "\r",
+                  "// Разбор тела\r",
+                  "let json = pm.response.json();\r",
+                  "\r",
+                  "// Проверка основных полей ответа\r",
+                  "pm.test(\"Есть id отзыва\", function () {\r",
+                  "    pm.expect(json.id).to.exist;\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"rating совпадает по значению и ≤ 5\", function () {\r",
+                  "    const reqBody = JSON.parse(pm.request.body.raw);\r",
+                  "    const sent = Number(reqBody.rating);               // 5 или \"5\" -> 5\r",
+                  "    const got = Number(pm.response.json().rating);     // \"5.0\" -> 5\r",
+                  "\r",
+                  "    pm.expect(got).to.eql(sent);\r",
+                  "    pm.expect(got).to.be.at.most(5);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"text совпадает с отправленным и ≤ 1000 символов\", function () {\r",
+                  "    const sent = JSON.parse(pm.request.body.raw).text;\r",
+                  "    pm.expect(json.text).to.eql(sent);\r",
+                  "    pm.expect(json.text.length).to.be.below(1001);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Поле created присутствует\", function () {\r",
+                  "    pm.expect(json.created).to.exist;\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{access}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-CSRFTOKEN",
+                "value": "5gHeDkuBtns59DUBjG96gRKWQ54iRW3mhGxsmFREE2gpMmNUKoTI8kzoVAGqurcs"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"rating\": 5,\r\n  \"text\": \"не понравилось, но приду снова\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/reviews/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "reviews",
+                ""
+              ]
+            },
+            "description": "Generated from cURL: curl -X 'POST' \\\r\n  'https://api.test.telemed.doct24.com/api/reviews/' \\\r\n  -H 'accept: application/json' \\\r\n  -H 'Content-Type: application/json' \\\r\n  -H 'X-CSRFTOKEN: 5gHeDkuBtns59DUBjG96gRKWQ54iRW3mhGxsmFREE2gpMmNUKoTI8kzoVAGqurcs' \\\r\n  -d '{\r\n  \"rating\": \"18\",\r\n  \"text\": \"не понравилось, но приду снова\"\r\n}'"
+          },
+          "response": []
+        },
+        {
+          "name": "список статей",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "https://api.test.telemed.doct24.com/api/news/posts/",
+              "protocol": "https",
+              "host": [
+                "api",
+                "test",
+                "telemed",
+                "doct24",
+                "com"
+              ],
+              "path": [
+                "api",
+                "news",
+                "posts",
+                ""
+              ]
+            },
+            "description": "Generated from cURL: curl -X 'GET' \\\r\n  'https://api.test.telemed.doct24.com/api/news/posts/' \\\r\n  -H 'accept: application/json'"
+          },
+          "response": []
+        },
+        {
+          "name": "Оставление комментария о статье",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{access}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"text\": \"Тестовый комментарий для проверки 500\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}} /news/post_chat/{{post_id}}/",
+              "host": [
+                "{{base_url}} "
+              ],
+              "path": [
+                "news",
+                "post_chat",
+                "{{post_id}}",
+                ""
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "негативные тесты",
+      "item": [
+        {
+          "name": "Запись на консультацию.( не возможна, пока не  будет добавлено рабочее время хотя бы одного доктора.)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-CSRFTOKEN",
+                "value": "5gHeDkuBtns59DUBjG96gRKWQ54iRW3mhGxsmFREE2gpMmNUKoTI8kzoVAGqurcs"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"consultation_time\": \"2026-04-10T12:40:45.178Z\",\r\n  \"doctor\": \"3fa85f64-5717-4562-b3fc-2c963f66afa6\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://api.test.telemed.doct24.com/api/consultations/",
+              "protocol": "https",
+              "host": [
+                "api",
+                "test",
+                "telemed",
+                "doct24",
+                "com"
+              ],
+              "path": [
+                "api",
+                "consultations",
+                ""
+              ]
+            },
+            "description": "Generated from cURL: curl -X 'POST' \\\r\n  'https://api.test.telemed.doct24.com/api/consultations/' \\\r\n  -H 'accept: application/json' \\\r\n  -H 'Content-Type: application/json' \\\r\n  -H 'X-CSRFTOKEN: 5gHeDkuBtns59DUBjG96gRKWQ54iRW3mhGxsmFREE2gpMmNUKoTI8kzoVAGqurcs' \\\r\n  -d '{\r\n  \"consultation_time\": \"2026-04-10T12:40:45.178Z\",\r\n  \"doctor\": \"3fa85f64-5717-4562-b3fc-2c963f66afa6\"\r\n}'"
+          },
+          "response": []
+        },
+        {
+          "name": "Отзыв о сервисе без авторизации",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Статус 201\", function () {\r",
+                  "    pm.response.to.have.status(201);\r",
+                  "});\r",
+                  "\r",
+                  "// Разбор тела\r",
+                  "let json = pm.response.json();\r",
+                  "\r",
+                  "// Проверка основных полей ответа\r",
+                  "pm.test(\"Есть id отзыва\", function () {\r",
+                  "    pm.expect(json.id).to.exist;\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"rating совпадает по значению и ≤ 5\", function () {\r",
+                  "    const reqBody = JSON.parse(pm.request.body.raw);\r",
+                  "    const sent = Number(reqBody.rating);               // 5 или \"5\" -> 5\r",
+                  "    const got = Number(pm.response.json().rating);     // \"5.0\" -> 5\r",
+                  "\r",
+                  "    pm.expect(got).to.eql(sent);\r",
+                  "    pm.expect(got).to.be.at.most(5);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"text совпадает с отправленным и ≤ 1000 символов\", function () {\r",
+                  "    const sent = JSON.parse(pm.request.body.raw).text;\r",
+                  "    pm.expect(json.text).to.eql(sent);\r",
+                  "    pm.expect(json.text.length).to.be.below(1001);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Поле created присутствует\", function () {\r",
+                  "    pm.expect(json.created).to.exist;\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{access}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-CSRFTOKEN",
+                "value": "5gHeDkuBtns59DUBjG96gRKWQ54iRW3mhGxsmFREE2gpMmNUKoTI8kzoVAGqurcs"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"rating\": 5,\r\n  \"text\": \"не понравилось, но приду снова\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/reviews/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "reviews",
+                ""
+              ]
+            },
+            "description": "Generated from cURL: curl -X 'POST' \\\r\n  'https://api.test.telemed.doct24.com/api/reviews/' \\\r\n  -H 'accept: application/json' \\\r\n  -H 'Content-Type: application/json' \\\r\n  -H 'X-CSRFTOKEN: 5gHeDkuBtns59DUBjG96gRKWQ54iRW3mhGxsmFREE2gpMmNUKoTI8kzoVAGqurcs' \\\r\n  -d '{\r\n  \"rating\": \"18\",\r\n  \"text\": \"не понравилось, но приду снова\"\r\n}'"
+          },
+          "response": []
+        },
+        {
+          "name": "Отзыв о сервисе превышение длины текста",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 400\", function () {\r",
+                  "    pm.response.to.have.status(400);\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            },
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "let longText = 'a'.repeat(1001);\r",
+                  "pm.environment.set(\"too_long_text\", longText);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{access}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-CSRFTOKEN",
+                "value": "5gHeDkuBtns59DUBjG96gRKWQ54iRW3mhGxsmFREE2gpMmNUKoTI8kzoVAGqurcs"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"rating\": 5,\r\n  \"text\": \"{{too_long_text}}\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/reviews/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "reviews",
+                ""
+              ]
+            },
+            "description": "Generated from cURL: curl -X 'POST' \\\r\n  'https://api.test.telemed.doct24.com/api/reviews/' \\\r\n  -H 'accept: application/json' \\\r\n  -H 'Content-Type: application/json' \\\r\n  -H 'X-CSRFTOKEN: 5gHeDkuBtns59DUBjG96gRKWQ54iRW3mhGxsmFREE2gpMmNUKoTI8kzoVAGqurcs' \\\r\n  -d '{\r\n  \"rating\": \"18\",\r\n  \"text\": \"не понравилось, но приду снова\"\r\n}'"
+          },
+          "response": []
+        },
+        {
+          "name": "Отзыв о сервисе невалидные данные",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "// 1. Статус не 201 (например, 400 или 422)\r",
+                  "pm.test(\"Невалидный текст не создаёт отзыв\", function () {\r",
+                  "    pm.expect(pm.response.code).to.not.eql(201);\r",
+                  "});\r",
+                  "\r",
+                  "// 2. Есть ошибка по полю text\r",
+                  "pm.test(\"Есть ошибка валидации по text\", function () {\r",
+                  "    const json = pm.response.json();\r",
+                  "    pm.expect(json.text, \"ожидаем сообщение об ошибке для text\").to.exist;\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{access}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-CSRFTOKEN",
+                "value": "5gHeDkuBtns59DUBjG96gRKWQ54iRW3mhGxsmFREE2gpMmNUKoTI8kzoVAGqurcs"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"rating\": 5,\r\n  \"text\": \"Сервис норм, но вот эти теги <script>alert('xss')</script> мне не нравятся\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/reviews/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "reviews",
+                ""
+              ]
+            },
+            "description": "Generated from cURL: curl -X 'POST' \\\r\n  'https://api.test.telemed.doct24.com/api/reviews/' \\\r\n  -H 'accept: application/json' \\\r\n  -H 'Content-Type: application/json' \\\r\n  -H 'X-CSRFTOKEN: 5gHeDkuBtns59DUBjG96gRKWQ54iRW3mhGxsmFREE2gpMmNUKoTI8kzoVAGqurcs' \\\r\n  -d '{\r\n  \"rating\": \"18\",\r\n  \"text\": \"не понравилось, но приду снова\"\r\n}'"
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "auth": {
+    "type": "bearer"
+  },
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "id",
+      "value": ""
+    },
+    {
+      "key": "base_url",
+      "value": "https://template.postman-echo.com"
+    },
+    {
+      "key": "access",
+      "value": ""
+    },
+    {
+      "key": "refresh",
+      "value": ""
+    },
+    {
+      "key": "doctor_id",
+      "value": ""
+    },
+    {
+      "key": "education_id",
+      "value": ""
+    },
+    {
+      "key": "education_institution",
+      "value": ""
+    },
+    {
+      "key": "education_specialty",
+      "value": ""
+    },
+    {
+      "key": "skills_improvement_id",
+      "value": ""
+    },
+    {
+      "key": "skills_improvement_org",
+      "value": ""
+    },
+    {
+      "key": "skills_improvement_program",
+      "value": ""
+    },
+    {
+      "key": "doctor_specialization_id",
+      "value": ""
+    },
+    {
+      "key": "doctor_specialization_name",
+      "value": ""
+    },
+    {
+      "key": "post_id",
+      "value": ""
+    }
+  ]
+}
